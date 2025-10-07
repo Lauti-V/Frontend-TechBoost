@@ -16,62 +16,33 @@ const recursos = [
     nivel: "Inicial",
     img: "../img/windows_llave.jpg",
     resumen: "Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
-    pasos: [
-      "Desinstalar bloatware innecesario.",
-      "Limpiar temporales (Win + R → %temp%).",
-      "Desactivar apps en segundo plano innecesarias.",
-      "Actualizar drivers y Windows Update.",
-      "Comprobar estado del disco (TRIM/SMART)."
-    ],
-    enlaces: [{ t: "Instagram", href: "https://www.instagram.com/tech.boost_/" }]
   },
   {
     id: 2,
     titulo: "Cuidados esenciales para tu notebook",
     categoria: "Hardware",
     nivel: "Inicial",
-    img: "../img/cuidado_not.jpeg",
+    img: "../img/notebook.jpg",
     resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
-    pasos: [
-      "Usar base refrigerante.",
-      "Evitar obstruir ventilaciones.",
-      "Limpieza periódica del polvo.",
-      "Cuidar ciclos de carga de la batería."
-    ],
-    enlaces: []
   },
   {
     id: 3,
     titulo: "Optimización básica de Windows 11",
     categoria: "Optimización",
     nivel: "Intermedio",
-    img: "../img/optimizacion_pc.jpg",
+    img: "../img/windows_opt.jpg",
     resumen: "Servicios, inicio, desbloat, drivers y ajustes visuales.",
-    pasos: [
-      "Deshabilitar apps en inicio.",
-      "Configurar servicios innecesarios.",
-      "Aplicar desbloat con scripts confiables.",
-      "Actualizar drivers y GPU.",
-      "Crear punto de restauración."
-    ],
-    enlaces: []
   },
   {
     id: 4,
     titulo: "Instalar paquete de Office",
     categoria: "Software",
     nivel: "Inicial",
-    img: "../img/office.jpg",
+    img: "../img/office_instalar.jpg",
     resumen: "Guía para descargar, instalar y activar Microsoft Office correctamente.",
-    pasos: [
-      "Descargar instalador oficial.",
-      "Ejecutar e instalar la edición deseada.",
-      "Aplicar activación segura.",
-      "Verificar licencia/funcionamiento."
-    ],
-    enlaces: []
   }
 ];
+
 
 /********************
  * Autenticación (localStorage)
@@ -293,25 +264,26 @@ function seedWorksIfEmpty() {
     const cur = getWorks();
     if (Array.isArray(cur) && cur.length === 0) {
       setWorks([
-        {
-          id: 101,
-          titulo: "Limpieza + pasta térmica",
-          tipo: "Mantenimiento",
-          fecha: "2025-02-01",
-          descripcion: "Limpieza interna, cambio de pasta y revisión general.",
-          img: "../img/trabajo1.jpg",
-          reel: "https://www.instagram.com/reel/XXXXXXXX/"
-        },
-        {
-          id: 102,
-          titulo: "Optimización Windows 11",
-          tipo: "Optimización",
-          fecha: "2025-01-18",
-          descripcion: "Desbloat, servicios e inicio.",
-          img: "../img/trabajo2.jpg",
-          reel: ""
-        }
-      ]);
+  {
+    id: 101,
+    titulo: "Cambio de pantalla Touch Notebook ACER",
+    tipo: "Reparación",
+    fecha: "2025-10-05",
+    descripcion: "Se procedió a cambiar el flex y pantalla touch de una notebook Acer.",
+    img: "../img/trabajo1.jpg",
+    reel: ""
+  },
+  {
+    id: 102,
+    titulo: "Limpieza + pasta térmica",
+    tipo: "Mantenimiento",
+    fecha: "2025-01-31",
+    descripcion: "Limpieza interna, cambio de pasta y revisión general.",
+    img: "../img/trabajo2.jpg",
+    reel: ""
+  }
+]);
+
     }
   } catch (e) { console.warn(e); }
 }
