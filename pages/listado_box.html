@@ -1,32 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Catálogo — Tech.Boost_</title>
   <link rel="stylesheet" href="../styles.css">
   <script defer src="../script.js"></script>
 </head>
 <body>
-  <!-- Logo superior -->
   <div class="logo-container centered-logo">
-    <img src="../img/logo_tech.boost.png" alt="Logo Tech.Boost_" class="logo">
+    <img class="logo" src="../img/logo_tech.boost.png" alt="Logo Tech.Boost_">
   </div>
 
-  <!-- Encabezado -->
   <header class="site-header">
     <a class="brand" href="../index.html">⚡ Tech.Boost_</a>
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Principal">
       <a href="listado_tabla.html">Tabla</a>
-      <a href="listado_box.html" class="active">Catálogo</a>
-      <a href="trabajos.html">Trabajos</a>
+      <a class="active" href="listado_box.html">Catálogo</a>
       <a href="comprar.html" class="btn">Contacto</a>
       <a href="login.html" id="nav-login">Ingresar</a>
       <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
     </nav>
   </header>
 
-  <!-- Contenido principal -->
   <main class="container">
     <h1 class="page-title">Recursos</h1>
     <section id="grid-recursos" class="grid"></section>
