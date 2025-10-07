@@ -1,27 +1,28 @@
-// ====== CONFIG ======
+/* ===============================
+   CONFIG / UTILIDADES
+=================================*/
 const ADMIN_EMAIL = "veralautharo@gmail.com";
 
-// Detección de contexto (si estamos dentro de /pages/ para construir rutas de imágenes)
 const IN_PAGES = location.pathname.includes("/pages/");
 const IMG = (name) => (IN_PAGES ? `../img/${name}` : `img/${name}`);
 
-// ====== NAV / LOGIN BÁSICO ======
 const getUser = () => localStorage.getItem("usuario") || "";
 const setUser = (email) => localStorage.setItem("usuario", email);
-const isAdmin = () =>
-  getUser().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+const clearUser = () => localStorage.removeItem("usuario");
+const isAdmin = () => getUser().toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
+/* ===============================
+   NAV / LOGIN
+=================================*/
 function actualizarNavegacion() {
   const login = document.getElementById("nav-login");
   const perfil = document.getElementById("nav-perfil");
-  if (!login || !perfil) return;
-  if (getUser()) {
-    login.style.display = "none";
-    perfil.style.display = "inline-block";
-  } else {
-    login.style.display = "inline-block";
-    perfil.style.display = "none";
+  const chip = document.getElementById("admin-chip"); // opcional
+  if (login && perfil) {
+    if (getUser()) { login.style.display = "none"; perfil.style.display = "inline-block"; }
+    else { login.style.display = "inline-block"; perfil.style.display = "none"; }
   }
+  if (chip) chip.style.display = isAdmin() ? "inline-block" : "none";
 }
 
 function bindLoginPage() {
@@ -35,7 +36,18 @@ function bindLoginPage() {
   });
 }
 
-// ====== RECURSOS (CATÁLOGO / TABLA / FICHA) ======
+function bindLogout() {
+  const out = document.getElementById("logout");
+  if (!out) return;
+  out.addEventListener("click", () => {
+    clearUser();
+    location.href = IN_PAGES ? "../index.html" : "index.html";
+  });
+}
+
+/* ===============================
+   RECURSOS (Catálogo / Tabla / Ficha)
+=================================*/
 const recursos = [
   {
     id: 1,
@@ -57,7 +69,7 @@ const recursos = [
     titulo: "Cuidados esenciales para tu notebook",
     categoria: "Hardware",
     nivel: "Inicial",
-    img: IMG("notebook.jpeg"), // .jpeg en tu repo
+    img: IMG("notebook.jpeg"), // ojo: .jpeg en tu repo
     resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
     pasos: [
       "Usar base refrigerante.",
@@ -105,9 +117,7 @@ function renderRecursos() {
     .map(
       (r) => `
     <article class="card">
-      <img src="${r.img}" alt="${r.titulo}" onerror="this.src='${IMG(
-        "windows_llave.jpg"
-      )}'">
+      <img src="${r.img}" alt="${r.titulo}" onerror="this.src='${IMG("windows_llave.jpg")}'">
       <div class="pad">
         <h3>${r.titulo}</h3>
         <p class="muted">${r.categoria} · ${r.nivel}</p>
@@ -143,9 +153,7 @@ function renderProducto() {
   const item = recursos.find((r) => r.id === id);
   if (!item) return (cont.innerHTML = "<p>No se encontró el recurso.</p>");
   cont.innerHTML = `
-    <img src="${item.img}" alt="${item.titulo}" onerror="this.src='${IMG(
-    "windows_llave.jpg"
-  )}'">
+    <img src="${item.img}" alt="${item.titulo}" onerror="this.src='${IMG("windows_llave.jpg")}'">
     <div>
       <h2>${item.titulo}</h2>
       <p><strong>Categoría:</strong> ${item.categoria}</p>
@@ -157,7 +165,9 @@ function renderProducto() {
     </div>`;
 }
 
-// ====== TRABAJOS (LOCALSTORAGE) ======
+/* ===============================
+   TRABAJOS (LocalStorage)
+=================================*/
 const LS_WORKS = "tb_works_v1";
 
 const getWorks = () => {
@@ -170,8 +180,7 @@ const getWorks = () => {
 const setWorks = (arr) => localStorage.setItem(LS_WORKS, JSON.stringify(arr));
 
 function seedWorksIfEmpty() {
-  const cur = getWorks();
-  if (cur.length) return;
+  if (getWorks().length) return;
   setWorks([
     {
       id: Date.now(),
@@ -194,27 +203,32 @@ function seedWorksIfEmpty() {
   ]);
 }
 
-const q = (id) => document.getElementById(id);
+function formatDate(iso) {
+  if (!iso) return "-";
+  const d = new Date(iso);
+  return d.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" });
+}
 
-function fillWorkForm(w) {
-  q("w-id").value = w?.id || "";
-  q("w-title").value = w?.titulo || "";
-  q("w-type").value = w?.tipo || "Reparación";
-  q("w-date").value = w?.fecha || "";
-  q("w-desc").value = w?.descripcion || "";
-  q("w-img").value = w?.img || IMG("trabajo1.jpg");
-  q("w-reel").value = w?.reel || "";
+function fillWorkForm(w = {}) {
+  const q = (id) => document.getElementById(id);
+  q("w-id").value = w.id || "";
+  q("w-title").value = w.titulo || "";
+  q("w-type").value = w.tipo || "Reparación";
+  q("w-date").value = w.fecha || "";
+  q("w-desc").value = w.descripcion || "";
+  q("w-img").value = w.img || IMG("trabajo1.jpg");
+  q("w-reel").value = w.reel || "";
 }
 
 function renderTrabajos() {
-  const tbody = q("tbody-works");
+  const tbody = document.getElementById("tbody-works");
   if (!tbody) return;
 
-  const arr = getWorks().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   const admin = isAdmin();
-  const thAcc = q("th-acciones");
+  const thAcc = document.getElementById("th-acciones");
   if (thAcc) thAcc.style.display = admin ? "" : "none";
 
+  const arr = getWorks().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   tbody.innerHTML = arr
     .map(
       (w, i) => `
@@ -226,7 +240,7 @@ function renderTrabajos() {
       <td>${w.descripcion}</td>
       <td>${w.img ? `<img src="${w.img}" style="width:64px;height:48px;object-fit:cover;border-radius:6px">` : "-"}</td>
       <td>${w.reel ? `<a class="btn" target="_blank" href="${w.reel}">Ver</a>` : "-"}</td>
-      <td ${admin ? "" : 'style="display:none"'}>
+      <td ${admin ? "" : "style='display:none'"} >
         <a class="btn" data-edit="${w.id}">Editar</a>
         <a class="btn" data-del="${w.id}">Eliminar</a>
       </td>
@@ -255,15 +269,16 @@ function renderTrabajos() {
 }
 
 function bindAdminUI() {
-  const adminBox = q("admin-box");
+  const adminBox = document.getElementById("admin-box");
   if (adminBox) adminBox.style.display = isAdmin() ? "" : "none";
 
-  const clear = q("w-clear");
-  const save = q("w-save");
+  const clear = document.getElementById("w-clear");
+  const save = document.getElementById("w-save");
   if (clear) clear.addEventListener("click", (e) => (e.preventDefault(), fillWorkForm({})));
   if (save)
     save.addEventListener("click", (e) => {
       e.preventDefault();
+      const q = (id) => document.getElementById(id);
       const id = q("w-id").value.trim();
       const wNew = {
         id: id || Date.now(),
@@ -285,16 +300,13 @@ function bindAdminUI() {
     });
 }
 
-function formatDate(iso) {
-  if (!iso) return "-";
-  const d = new Date(iso);
-  return d.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" });
-}
-
-// ====== INIT ======
+/* ===============================
+   INIT
+=================================*/
 document.addEventListener("DOMContentLoaded", () => {
   actualizarNavegacion();
   bindLoginPage();
+  bindLogout();
 
   // Recursos
   renderRecursos();
