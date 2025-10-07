@@ -14,7 +14,7 @@ const recursos = [
     titulo: "Claves para Windows 10/11",
     categoria: "Claves",
     nivel: "Inicial",
-    img: "../img/windows_llave.jpg",
+    img: "./img/windows_llave.jpg",
     resumen: "Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
   },
   {
@@ -22,7 +22,7 @@ const recursos = [
     titulo: "Cuidados esenciales para tu notebook",
     categoria: "Hardware",
     nivel: "Inicial",
-    img: "../img/notebook.jpg",
+    img: "./img/notebook.jpg",
     resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
   },
   {
@@ -30,7 +30,7 @@ const recursos = [
     titulo: "Optimización básica de Windows 11",
     categoria: "Optimización",
     nivel: "Intermedio",
-    img: "../img/windows_opt.jpg",
+    img: "./img/windows_opt.jpg",
     resumen: "Servicios, inicio, desbloat, drivers y ajustes visuales.",
   },
   {
@@ -38,7 +38,7 @@ const recursos = [
     titulo: "Instalar paquete de Office",
     categoria: "Software",
     nivel: "Inicial",
-    img: "../img/office_instalar.jpg",
+    img: "./img/office_instalar.jpg",
     resumen: "Guía para descargar, instalar y activar Microsoft Office correctamente.",
   }
 ];
