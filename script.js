@@ -14,7 +14,7 @@ const recursos = [
     titulo: "Claves para Windows 10/11",
     categoria: "Claves",
     nivel: "Inicial",
-    img: "./img/windows_llave.jpg",
+    img: ".../img/windows_llave.jpg",
     resumen: "Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
   },
   {
