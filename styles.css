@@ -88,4 +88,36 @@ fieldset{
   border-radius:999px;
   font-size:12px;
 }
+/* ==== HOTFIX UI ==== */
+.logo-container{
+  display:flex;
+  justify-content:center;
+  margin:8px 0 0;
+}
+.logo{
+  max-width:260px;
+  height:auto;
+  display:block;
+}
+.site-header{
+  margin-top:0;
+  padding-top:8px;
+}
+fieldset{
+  border:1px solid #262c39 !important;
+  border-radius:12px;
+  padding:16px;
+}
+.badge{
+  display:inline-block;
+  background:#202532;
+  border:1px solid #2a3140;
+  color:#9aa4b2;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:12px;
+}
+/* (Opcional) chip admin si lo usás */
+.chip{margin-left:6px;background:#202532;border:1px solid #2a3140;color:#9aa4b2;padding:2px 8px;border-radius:999px;font-size:12px}
+
 
