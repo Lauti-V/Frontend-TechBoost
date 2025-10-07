@@ -13,7 +13,7 @@
   </div>
 
   <header class="site-header">
-   <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
+    <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
     <nav class="site-nav" aria-label="Principal">
       <a href="listado_tabla.html">Tabla</a>
       <a href="listado_box.html">Catálogo</a>
@@ -21,16 +21,18 @@
       <a href="comprar.html" class="btn">Contacto</a>
       <a href="login.html" id="nav-login">Ingresar</a>
       <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
+      <!-- (Opcional) cerrar sesión visible si querés -->
+      <!-- <a class="btn" id="logout">Cerrar sesión</a> -->
     </nav>
   </header>
 
   <main class="container">
     <h1 class="page-title">Trabajos y mantenimientos realizados</h1>
 
-    <!-- Panel admin, se muestra solo si el email logueado es el admin -->
+    <!-- Panel admin (solo visible si el email logueado es admin) -->
     <section id="admin-box" style="display:none">
       <fieldset class="form">
-        <legend>Nuevo / Editar trabajo (admin)</legend>
+        <legend>Nuevo / Editar trabajo</legend>
         <label>Título
           <input id="w-title" type="text" placeholder="Ej: Cambio de pantalla touch Notebook ACER">
         </label>
@@ -84,4 +86,3 @@
   <footer class="site-footer">© 2025 Tech.Boost_</footer>
 </body>
 </html>
-
