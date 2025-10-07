@@ -50,3 +50,42 @@ body{margin:0;font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif
 @media (max-width:960px){
   .product-detail{grid-template-columns:1fr}
 }
+/* ==== HOTFIX UI ====
+   - Reduce espacio superior por el logo
+   - Ajusta header y tamaños
+   - Mantiene tu estética original
+*/
+.logo-container{
+  display:flex;
+  justify-content:center;
+  margin:8px 0 0;      /* antes podía quedar mucho espacio */
+}
+.logo{
+  max-width:260px;     /* era muy grande -> achicamos */
+  height:auto;
+  display:block;
+}
+
+.site-header{
+  margin-top:0;
+  padding-top:8px;
+}
+
+/* Formulario: bordes más sutiles y padding coherente */
+fieldset{
+  border:1px solid #262c39 !important;
+  border-radius:12px;
+  padding:16px;
+}
+
+/* Tabla: badge más legible (por si lo usás en Trabajos) */
+.badge{
+  display:inline-block;
+  background:#202532;
+  border:1px solid #2a3140;
+  color:#9aa4b2;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:12px;
+}
+
