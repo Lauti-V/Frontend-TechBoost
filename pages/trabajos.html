@@ -27,10 +27,10 @@
   <main class="container">
     <h1 class="page-title">Trabajos y mantenimientos realizados</h1>
 
-    <!-- Form admin (solo visible si es admin) -->
+    <!-- Panel admin, se muestra solo si el email logueado es el admin -->
     <section id="admin-box" style="display:none">
       <fieldset class="form">
-        <legend>Nuevo / Editar trabajo (solo admin)</legend>
+        <legend>Nuevo / Editar trabajo (admin)</legend>
         <label>Título
           <input id="w-title" type="text" placeholder="Ej: Cambio de pantalla touch Notebook ACER">
         </label>
@@ -46,7 +46,7 @@
           <input id="w-date" type="date">
         </label>
         <label>Descripción
-          <textarea id="w-desc" rows="3" placeholder="Breve descripción del trabajo realizado"></textarea>
+          <textarea id="w-desc" rows="3" placeholder="Breve descripción del trabajo"></textarea>
         </label>
         <label>Imagen (ruta relativa)
           <input id="w-img" type="text" placeholder="../img/trabajo1.jpg">
