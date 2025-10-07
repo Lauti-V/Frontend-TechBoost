@@ -1,173 +1,173 @@
-/* ===============================
-   CONFIG / CONSTANTES
-=================================*/
+// ====== CONFIG ======
 const ADMIN_EMAIL = "veralautharo@gmail.com";
 
-/* ===============================
-   UTILIDADES DE USUARIO
-=================================*/
+// Detección de contexto (si estamos dentro de /pages/ para construir rutas de imágenes)
+const IN_PAGES = location.pathname.includes("/pages/");
+const IMG = (name) => (IN_PAGES ? `../img/${name}` : `img/${name}`);
+
+// ====== NAV / LOGIN BÁSICO ======
 const getUser = () => localStorage.getItem("usuario") || "";
 const setUser = (email) => localStorage.setItem("usuario", email);
-const clearUser = () => localStorage.removeItem("usuario");
-const isAdmin = () => getUser().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+const isAdmin = () =>
+  getUser().toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
-/* ===============================
-   NAV (mostrar Ingresar / Mi Perfil)
-=================================*/
 function actualizarNavegacion() {
-  const navLogin = document.getElementById("nav-login");
-  const navPerfil = document.getElementById("nav-perfil");
-  if (!navLogin || !navPerfil) return;
+  const login = document.getElementById("nav-login");
+  const perfil = document.getElementById("nav-perfil");
+  if (!login || !perfil) return;
   if (getUser()) {
-    navLogin.style.display = "none";
-    navPerfil.style.display = "inline-block";
+    login.style.display = "none";
+    perfil.style.display = "inline-block";
   } else {
-    navLogin.style.display = "inline-block";
-    navPerfil.style.display = "none";
+    login.style.display = "inline-block";
+    perfil.style.display = "none";
   }
 }
 
-/* ===============================
-   LOGIN PAGE
-=================================*/
-function bindLogin() {
+function bindLoginPage() {
   const btn = document.getElementById("login-btn");
   if (!btn) return;
   btn.addEventListener("click", () => {
     const email = (document.getElementById("login-email").value || "").trim();
-    if (!email) { alert("Ingresá un email"); return; }
+    if (!email) return alert("Ingresá un email");
     setUser(email);
-    // Volver a trabajos si es admin, o al inicio
-    if (isAdmin()) location.href = "trabajos.html";
-    else location.href = "../index.html";
+    location.href = isAdmin() ? "trabajos.html" : "../index.html";
   });
 }
 
-/* ===============================
-   RECURSOS (catálogo / tabla / ficha)
-=================================*/
+// ====== RECURSOS (CATÁLOGO / TABLA / FICHA) ======
 const recursos = [
   {
     id: 1,
     titulo: "Claves para Windows 10/11",
     categoria: "Claves",
     nivel: "Inicial",
-    img: "../img/windows_llave.jpg",
+    img: IMG("windows_llave.jpg"),
     resumen: "Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
     pasos: [
       "Desinstalar bloatware innecesario.",
       "Limpiar temporales (Win + R → %temp%).",
       "Desactivar apps en segundo plano innecesarias.",
       "Actualizar drivers y Windows Update.",
-      "Comprobar estado del disco (TRIM/SMART)."
-    ]
+      "Comprobar estado del disco (TRIM/SMART).",
+    ],
   },
   {
     id: 2,
     titulo: "Cuidados esenciales para tu notebook",
     categoria: "Hardware",
     nivel: "Inicial",
-    img: "../img/notebook.jpeg", // ojo: .jpeg en tu repo
+    img: IMG("notebook.jpeg"), // .jpeg en tu repo
     resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
     pasos: [
       "Usar base refrigerante.",
       "Evitar obstruir ventilaciones.",
       "Limpieza periódica del polvo.",
-      "Cuidar ciclos de carga de la batería."
-    ]
+      "Cuidar ciclos de carga de la batería.",
+    ],
   },
   {
     id: 3,
     titulo: "Optimización básica de Windows 11",
     categoria: "Optimización",
     nivel: "Intermedio",
-    img: "../img/windows_opt.jpg",
+    img: IMG("windows_opt.jpg"),
     resumen: "Servicios, inicio, desbloat, drivers y ajustes visuales.",
     pasos: [
       "Deshabilitar apps en inicio.",
       "Configurar servicios innecesarios.",
       "Aplicar desbloat con scripts confiables.",
       "Actualizar drivers y GPU.",
-      "Crear punto de restauración."
-    ]
+      "Crear punto de restauración.",
+    ],
   },
   {
     id: 4,
     titulo: "Instalar paquete de Office",
     categoria: "Software",
     nivel: "Inicial",
-    img: "../img/office_instalar.jpg",
-    resumen: "Guía para descargar, instalar y activar Microsoft Office correctamente.",
+    img: IMG("office_instalar.jpg"),
+    resumen:
+      "Guía para descargar, instalar y activar Microsoft Office correctamente.",
     pasos: [
       "Descargar instalador oficial.",
       "Ejecutar e instalar la edición deseada.",
       "Aplicar activación segura.",
-      "Verificar licencia/funcionamiento."
-    ]
-  }
+      "Verificar licencia/funcionamiento.",
+    ],
+  },
 ];
 
 function renderRecursos() {
   const grid = document.getElementById("grid-recursos");
   if (!grid) return;
-  grid.innerHTML = recursos.map(r => `
+  grid.innerHTML = recursos
+    .map(
+      (r) => `
     <article class="card">
-      <img src="${r.img}" alt="${r.titulo}" onerror="this.src='../img/windows_llave.jpg'">
+      <img src="${r.img}" alt="${r.titulo}" onerror="this.src='${IMG(
+        "windows_llave.jpg"
+      )}'">
       <div class="pad">
         <h3>${r.titulo}</h3>
         <p class="muted">${r.categoria} · ${r.nivel}</p>
         <p>${r.resumen}</p>
         <a href="producto.html?id=${r.id}" class="btn">Leer más</a>
       </div>
-    </article>
-  `).join("");
+    </article>`
+    )
+    .join("");
 }
 
 function renderTablaRecursos() {
   const tbody = document.getElementById("tbody-recursos");
   if (!tbody) return;
-  tbody.innerHTML = recursos.map((r,i) => `
+  tbody.innerHTML = recursos
+    .map(
+      (r, i) => `
     <tr>
-      <td>${i+1}</td>
+      <td>${i + 1}</td>
       <td>${r.titulo}</td>
       <td>${r.categoria}</td>
       <td>${r.nivel}</td>
       <td><a class="btn" href="producto.html?id=${r.id}">Ver ficha</a></td>
-    </tr>
-  `).join("");
+    </tr>`
+    )
+    .join("");
 }
 
 function renderProducto() {
   const cont = document.getElementById("ficha");
   if (!cont) return;
-  const params = new URLSearchParams(location.search);
-  const id = Number(params.get("id"));
-  const item = recursos.find(r => r.id === id);
-  if (!item) { cont.innerHTML = "<p>No se encontró el recurso solicitado.</p>"; return; }
+  const id = Number(new URLSearchParams(location.search).get("id"));
+  const item = recursos.find((r) => r.id === id);
+  if (!item) return (cont.innerHTML = "<p>No se encontró el recurso.</p>");
   cont.innerHTML = `
-    <img src="${item.img}" alt="${item.titulo}" onerror="this.src='../img/windows_llave.jpg'">
+    <img src="${item.img}" alt="${item.titulo}" onerror="this.src='${IMG(
+    "windows_llave.jpg"
+  )}'">
     <div>
       <h2>${item.titulo}</h2>
       <p><strong>Categoría:</strong> ${item.categoria}</p>
       <p><strong>Nivel:</strong> ${item.nivel}</p>
       <p>${item.resumen}</p>
       <h3>Pasos</h3>
-      <ul>${item.pasos.map(p => `<li>${p}</li>`).join("")}</ul>
+      <ul>${item.pasos.map((p) => `<li>${p}</li>`).join("")}</ul>
       <a href="listado_box.html" class="btn">Volver</a>
-    </div>
-  `;
+    </div>`;
 }
 
-/* ===============================
-   TRABAJOS (localStorage)
-=================================*/
+// ====== TRABAJOS (LOCALSTORAGE) ======
 const LS_WORKS = "tb_works_v1";
 
-function getWorks() {
-  try { return JSON.parse(localStorage.getItem(LS_WORKS)) || []; }
-  catch { return []; }
-}
-function setWorks(arr) { localStorage.setItem(LS_WORKS, JSON.stringify(arr)); }
+const getWorks = () => {
+  try {
+    return JSON.parse(localStorage.getItem(LS_WORKS)) || [];
+  } catch {
+    return [];
+  }
+};
+const setWorks = (arr) => localStorage.setItem(LS_WORKS, JSON.stringify(arr));
 
 function seedWorksIfEmpty() {
   const cur = getWorks();
@@ -179,130 +179,129 @@ function seedWorksIfEmpty() {
       tipo: "Reparación",
       fecha: "2025-10-05",
       descripcion: "Cambio de flex y reemplazo de pantalla touch.",
-      img: "../img/trabajo1.jpg",
-      reel: ""
+      img: IMG("trabajo1.jpg"),
+      reel: "",
     },
     {
-      id: Date.now()+1,
+      id: Date.now() + 1,
       titulo: "Limpieza + pasta térmica",
       tipo: "Mantenimiento",
       fecha: "2025-01-31",
       descripcion: "Limpieza interna, cambio de pasta y revisión general.",
-      img: "../img/trabajo2.jpg",
-      reel: ""
-    }
+      img: IMG("trabajo2.jpg"),
+      reel: "",
+    },
   ]);
 }
 
+const q = (id) => document.getElementById(id);
+
 function fillWorkForm(w) {
-  document.getElementById("w-id").value   = w?.id || "";
-  document.getElementById("w-title").value= w?.titulo || "";
-  document.getElementById("w-type").value = w?.tipo || "Reparación";
-  document.getElementById("w-date").value = w?.fecha || "";
-  document.getElementById("w-desc").value = w?.descripcion || "";
-  document.getElementById("w-img").value  = w?.img || "../img/trabajo1.jpg";
-  document.getElementById("w-reel").value = w?.reel || "";
+  q("w-id").value = w?.id || "";
+  q("w-title").value = w?.titulo || "";
+  q("w-type").value = w?.tipo || "Reparación";
+  q("w-date").value = w?.fecha || "";
+  q("w-desc").value = w?.descripcion || "";
+  q("w-img").value = w?.img || IMG("trabajo1.jpg");
+  q("w-reel").value = w?.reel || "";
 }
 
 function renderTrabajos() {
-  const tbody = document.getElementById("tbody-works");
+  const tbody = q("tbody-works");
   if (!tbody) return;
 
-  const works = getWorks().sort((a,b) => (a.fecha < b.fecha ? 1 : -1));
+  const arr = getWorks().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   const admin = isAdmin();
-
-  const thAcc = document.getElementById("th-acciones");
+  const thAcc = q("th-acciones");
   if (thAcc) thAcc.style.display = admin ? "" : "none";
 
-  tbody.innerHTML = works.map((w,idx) => `
+  tbody.innerHTML = arr
+    .map(
+      (w, i) => `
     <tr>
-      <td>${idx+1}</td>
+      <td>${i + 1}</td>
       <td>${w.titulo}</td>
       <td><span class="badge">${w.tipo}</span></td>
       <td>${formatDate(w.fecha)}</td>
       <td>${w.descripcion}</td>
-      <td>${w.img ? `<img src="${w.img}" alt="" style="width:64px;height:48px;object-fit:cover;border-radius:6px">` : "-"}</td>
-      <td>${w.reel ? `<a class="btn" href="${w.reel}" target="_blank">Ver</a>` : "-"}</td>
+      <td>${w.img ? `<img src="${w.img}" style="width:64px;height:48px;object-fit:cover;border-radius:6px">` : "-"}</td>
+      <td>${w.reel ? `<a class="btn" target="_blank" href="${w.reel}">Ver</a>` : "-"}</td>
       <td ${admin ? "" : 'style="display:none"'}>
         <a class="btn" data-edit="${w.id}">Editar</a>
         <a class="btn" data-del="${w.id}">Eliminar</a>
       </td>
-    </tr>
-  `).join("");
+    </tr>`
+    )
+    .join("");
 
-  // listeners admin
   if (admin) {
-    tbody.querySelectorAll("[data-edit]").forEach(a => {
+    tbody.querySelectorAll("[data-edit]").forEach((a) =>
       a.addEventListener("click", () => {
         const id = a.getAttribute("data-edit");
-        const w = getWorks().find(x => String(x.id) === String(id));
+        const w = getWorks().find((x) => String(x.id) === String(id));
         fillWorkForm(w);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    });
-    tbody.querySelectorAll("[data-del]").forEach(a => {
+        scrollTo({ top: 0, behavior: "smooth" });
+      })
+    );
+    tbody.querySelectorAll("[data-del]").forEach((a) =>
       a.addEventListener("click", () => {
         const id = a.getAttribute("data-del");
         if (!confirm("¿Eliminar este trabajo?")) return;
-        const arr = getWorks().filter(x => String(x.id) !== String(id));
-        setWorks(arr);
+        setWorks(getWorks().filter((x) => String(x.id) !== String(id)));
         renderTrabajos();
-      });
-    });
+      })
+    );
   }
 }
 
 function bindAdminUI() {
-  const adminBox = document.getElementById("admin-box");
+  const adminBox = q("admin-box");
   if (adminBox) adminBox.style.display = isAdmin() ? "" : "none";
-  // botones
-  const btnClear = document.getElementById("w-clear");
-  const btnSave  = document.getElementById("w-save");
-  if (btnClear) btnClear.addEventListener("click", (e)=>{e.preventDefault(); fillWorkForm({});});
-  if (btnSave) btnSave.addEventListener("click", (e)=>{
-    e.preventDefault();
-    const id   = document.getElementById("w-id").value.trim();
-    const wNew = {
-      id: id || Date.now(),
-      titulo: (document.getElementById("w-title").value||"").trim(),
-      tipo:   document.getElementById("w-type").value,
-      fecha:  document.getElementById("w-date").value,
-      descripcion: (document.getElementById("w-desc").value||"").trim(),
-      img:    (document.getElementById("w-img").value||"").trim(),
-      reel:   (document.getElementById("w-reel").value||"").trim()
-    };
-    if (!wNew.titulo || !wNew.fecha) { alert("Completá al menos Título y Fecha"); return; }
-    const arr = getWorks();
-    const i = arr.findIndex(x => String(x.id) === String(id));
-    if (i >= 0) arr[i] = wNew; else arr.push(wNew);
-    setWorks(arr);
-    fillWorkForm({});
-    renderTrabajos();
-  });
+
+  const clear = q("w-clear");
+  const save = q("w-save");
+  if (clear) clear.addEventListener("click", (e) => (e.preventDefault(), fillWorkForm({})));
+  if (save)
+    save.addEventListener("click", (e) => {
+      e.preventDefault();
+      const id = q("w-id").value.trim();
+      const wNew = {
+        id: id || Date.now(),
+        titulo: (q("w-title").value || "").trim(),
+        tipo: q("w-type").value,
+        fecha: q("w-date").value,
+        descripcion: (q("w-desc").value || "").trim(),
+        img: (q("w-img").value || "").trim(),
+        reel: (q("w-reel").value || "").trim(),
+      };
+      if (!wNew.titulo || !wNew.fecha) return alert("Completá al menos Título y Fecha");
+      const arr = getWorks();
+      const i = arr.findIndex((x) => String(x.id) === String(id));
+      if (i >= 0) arr[i] = wNew;
+      else arr.push(wNew);
+      setWorks(arr);
+      fillWorkForm({});
+      renderTrabajos();
+    });
 }
 
-/* ===============================
-   HELPERS
-=================================*/
 function formatDate(iso) {
   if (!iso) return "-";
   const d = new Date(iso);
-  return d.toLocaleDateString("es-AR", { day:"2-digit", month:"2-digit", year:"numeric" });
+  return d.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
-/* ===============================
-   INIT
-=================================*/
+// ====== INIT ======
 document.addEventListener("DOMContentLoaded", () => {
   actualizarNavegacion();
-  bindLogin();
+  bindLoginPage();
 
-  // Recursos (catálogo/tabla/ficha)
+  // Recursos
   renderRecursos();
   renderTablaRecursos();
   renderProducto();
 
-  // Trabajos (solo en su página)
+  // Trabajos
   if (document.getElementById("tbody-works")) {
     seedWorksIfEmpty();
     bindAdminUI();
