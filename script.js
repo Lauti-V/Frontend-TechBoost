@@ -14,32 +14,58 @@ const recursos = [
     titulo: "Claves para Windows 10/11",
     categoria: "Claves",
     nivel: "Inicial",
-    img: ".../img/windows_llave.jpg",
+    img: "../img/windows_llave.jpg",
     resumen: "Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
+    pasos: [
+      "Desinstalar bloatware innecesario.",
+      "Limpiar temporales (Win + R → %temp%).",
+      "Desactivar apps en segundo plano innecesarias.",
+      "Actualizar drivers y Windows Update.",
+      "Comprobar estado del disco (TRIM/SMART)."
+    ]
   },
   {
     id: 2,
     titulo: "Cuidados esenciales para tu notebook",
     categoria: "Hardware",
     nivel: "Inicial",
-    img: "./img/notebook.jpg",
+    img: "../img/notebook.jpeg", // <- .jpeg según tu carpeta
     resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
+    pasos: [
+      "Usar base refrigerante.",
+      "Evitar obstruir ventilaciones.",
+      "Limpieza periódica del polvo.",
+      "Cuidar ciclos de carga de la batería."
+    ]
   },
   {
     id: 3,
     titulo: "Optimización básica de Windows 11",
     categoria: "Optimización",
     nivel: "Intermedio",
-    img: "./img/windows_opt.jpg",
+    img: "../img/windows_opt.jpg",
     resumen: "Servicios, inicio, desbloat, drivers y ajustes visuales.",
+    pasos: [
+      "Deshabilitar apps en inicio.",
+      "Configurar servicios innecesarios.",
+      "Aplicar desbloat con scripts confiables.",
+      "Actualizar drivers y GPU.",
+      "Crear punto de restauración."
+    ]
   },
   {
     id: 4,
     titulo: "Instalar paquete de Office",
     categoria: "Software",
     nivel: "Inicial",
-    img: "./img/office_instalar.jpg",
+    img: "../img/office_instalar.jpg",
     resumen: "Guía para descargar, instalar y activar Microsoft Office correctamente.",
+    pasos: [
+      "Descargar instalador oficial.",
+      "Ejecutar e instalar la edición deseada.",
+      "Aplicar activación segura.",
+      "Verificar licencia/funcionamiento."
+    ]
   }
 ];
 
@@ -260,29 +286,31 @@ const setWorks = (a) => localStorage.setItem(LS_WORKS_KEY, JSON.stringify(a));
 const fmtDate  = (d) => { try { return new Date(d).toLocaleDateString("es-AR"); } catch { return d || "-"; } };
 
 function seedWorksIfEmpty() {
-  try {
-    const cur = getWorks();
-    if (Array.isArray(cur) && cur.length === 0) {
-      setWorks([
-  {
-    id: 101,
-    titulo: "Cambio de pantalla Touch Notebook ACER",
-    tipo: "Reparación",
-    fecha: "2025-10-05",
-    descripcion: "Se procedió a cambiar el flex y pantalla touch de una notebook Acer.",
-    img: "../img/trabajo1.jpg",
-    reel: ""
-  },
-  {
-    id: 102,
-    titulo: "Limpieza + pasta térmica",
-    tipo: "Mantenimiento",
-    fecha: "2025-01-31",
-    descripcion: "Limpieza interna, cambio de pasta y revisión general.",
-    img: "../img/trabajo2.jpg",
-    reel: ""
+  const cur = getWorks();
+  if (Array.isArray(cur) && cur.length === 0) {
+    setWorks([
+      {
+        id: 101,
+        titulo: "Cambio de pantalla Touch Notebook ACER",
+        tipo: "Reparación",
+        fecha: "2025-10-05",
+        descripcion: "Cambio de flex y pantalla touch.",
+        img: "../img/trabajo1.jpg",
+        reel: ""
+      },
+      {
+        id: 102,
+        titulo: "Limpieza + pasta térmica",
+        tipo: "Mantenimiento",
+        fecha: "2025-01-31",
+        descripcion: "Limpieza interna, cambio de pasta y revisión general.",
+        img: "../img/trabajo2.jpg",
+        reel: ""
+      }
+    ]);
   }
-]);
+}
+
 
     }
   } catch (e) { console.warn(e); }
