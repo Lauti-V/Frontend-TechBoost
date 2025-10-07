@@ -1,6 +1,6 @@
-// ==================================================
-// RECURSOS DISPONIBLES (para catálogo y tabla)
-// ==================================================
+/* ===============================
+   Datos de recursos (catálogo)
+=================================*/
 const recursos = [
   {
     id: 1,
@@ -22,7 +22,7 @@ const recursos = [
     titulo: "Cuidados esenciales para tu notebook",
     categoria: "Hardware",
     nivel: "Inicial",
-    img: "../img/notebook.jpeg",
+    img: "../img/notebook.jpeg", // OJO: .jpeg según tu carpeta
     resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
     pasos: [
       "Usar base refrigerante.",
@@ -62,14 +62,12 @@ const recursos = [
   }
 ];
 
-// ==================================================
-// FUNCIONES PARA MOSTRAR LOS RECURSOS
-// ==================================================
-
-// Muestra las cards en el catálogo (listado_box.html)
+/* ===============================
+   Render catálogo (cards)
+=================================*/
 function renderRecursos() {
   const grid = document.getElementById("grid-recursos");
-  if (!grid) return; // si no estamos en la página, no hace nada
+  if (!grid) return;
 
   grid.innerHTML = recursos.map(r => `
     <article class="card">
@@ -84,7 +82,9 @@ function renderRecursos() {
   `).join("");
 }
 
-// Muestra los recursos en tabla (listado_tabla.html)
+/* ===============================
+   Render tabla
+=================================*/
 function renderTabla() {
   const tbody = document.getElementById("tbody-recursos");
   if (!tbody) return;
@@ -95,14 +95,14 @@ function renderTabla() {
       <td>${r.titulo}</td>
       <td>${r.categoria}</td>
       <td>${r.nivel}</td>
-      <td><a href="producto.html?id=${r.id}" class="btn">Ver ficha</a></td>
+      <td><a class="btn" href="producto.html?id=${r.id}">Ver ficha</a></td>
     </tr>
   `).join("");
 }
 
-// ==================================================
-// FUNCIÓN: MOSTRAR DETALLE DE UN PRODUCTO
-// ==================================================
+/* ===============================
+   Render ficha (detalle)
+=================================*/
 function renderProducto() {
   const cont = document.getElementById("ficha");
   if (!cont) return;
@@ -123,49 +123,31 @@ function renderProducto() {
       <p><strong>Categoría:</strong> ${item.categoria}</p>
       <p><strong>Nivel:</strong> ${item.nivel}</p>
       <p>${item.resumen}</p>
-      <h3>Pasos:</h3>
+      <h3>Pasos</h3>
       <ul>${item.pasos.map(p => `<li>${p}</li>`).join("")}</ul>
-      <a href="listado_box.html" class="btn">Volver al catálogo</a>
+      <a href="listado_box.html" class="btn">Volver</a>
     </div>
   `;
 }
 
-// ==================================================
-// LOGIN BÁSICO DE USUARIO (LOCAL)
-// ==================================================
-function login(email) {
-  localStorage.setItem("usuario", email);
-  location.reload();
-}
-
-function logout() {
-  localStorage.removeItem("usuario");
-  location.reload();
-}
-
-// Muestra opciones según si hay usuario logueado
+/* ===============================
+   Login visual (mostrar/ocultar)
+=================================*/
 function actualizarNavegacion() {
   const email = localStorage.getItem("usuario");
   const navLogin = document.getElementById("nav-login");
   const navPerfil = document.getElementById("nav-perfil");
-
   if (!navLogin || !navPerfil) return;
-
-  if (email) {
-    navLogin.style.display = "none";
-    navPerfil.style.display = "inline-block";
-  } else {
-    navLogin.style.display = "inline-block";
-    navPerfil.style.display = "none";
-  }
+  if (email) { navLogin.style.display = "none"; navPerfil.style.display = "inline-block"; }
+  else { navLogin.style.display = "inline-block"; navPerfil.style.display = "none"; }
 }
 
-// ==================================================
-// EVENTOS AL CARGAR LA PÁGINA
-// ==================================================
+/* ===============================
+   Init
+=================================*/
 document.addEventListener("DOMContentLoaded", () => {
-  renderRecursos();   // listado_box.html
-  renderTabla();      // listado_tabla.html
-  renderProducto();   // producto.html
+  renderRecursos();
+  renderTabla();
+  renderProducto();
   actualizarNavegacion();
 });
